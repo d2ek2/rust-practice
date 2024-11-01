@@ -5,14 +5,13 @@
     "workspaceFolder": "/workspace",
     "customizations": {
         "vscode": {
-            "extensions": [
-                "rust-lang.rust-analyzer",
-                "vadimcn.vscode-lldb",
-                "serayuzgur.crates",
-                "github.vscode-pull-request-github"
-            ],
             "settings": {
-                "rust-analyzer.checkOnSave.command": "clippy"
+                "terminal.integrated.defaultProfile.linux": "bash",
+                "terminal.integrated.profiles.linux": {
+                    "bash": {
+                        "path": "/bin/bash"
+                    }
+                }
             }
         }
     },

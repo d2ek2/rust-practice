@@ -19,6 +19,12 @@ FROM rust:1.74-slim
 
 WORKDIR /workspace
 
+# シェルをbashに設定
+SHELL ["/bin/bash", "-c"]
+
+# デフォルトシェルをbashに設定
+ENV SHELL /bin/bash
+
 # 開発に必要なツールのインストール
 RUN apt-get update && \
     apt-get install -y git curl && \
