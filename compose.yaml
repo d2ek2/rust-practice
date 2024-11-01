@@ -1,0 +1,14 @@
+services:
+  rust:
+    build:
+      context: .
+      dockerfile: .devcontainer/Dockerfile
+    volumes:
+      - .:/workspace
+      - cargo-cache:/usr/local/cargo/registry
+    working_dir: /workspace
+    command: /bin/bash
+    tty: true
+
+volumes:
+  cargo-cache:

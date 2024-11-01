@@ -1,0 +1,20 @@
+{
+    "name": "Rust Development",
+    "dockerComposeFile": "../compose.yaml",
+    "service": "rust",
+    "workspaceFolder": "/workspace",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "rust-lang.rust-analyzer",
+                "vadimcn.vscode-lldb",
+                "serayuzgur.crates",
+                "github.vscode-pull-request-github"
+            ],
+            "settings": {
+                "rust-analyzer.checkOnSave.command": "clippy"
+            }
+        }
+    },
+    "remoteUser": "rustdev"
+}
