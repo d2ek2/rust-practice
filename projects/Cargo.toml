@@ -2,7 +2,8 @@
 resolver = "2"
 members = [
     "hello_world",
-    "count"
+    "count",
+    "fizzbuzz"
 ]
 exclude = [
     "target"

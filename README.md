@@ -37,18 +37,30 @@ Docker と VS Code Dev Containers を使用した、Mac最適化のRust開発環
 
 3. **ファイル構成の意図**
    ```
-   .devcontainer/
-   ├── devcontainer.json  # VS Code設定
-   └── Dockerfile         # 環境定義
+   .
+   ├── .devcontainer
+   │   └── devcontainer.json
+   ├── .vscode
+   │   └── settings.json
+   ├── projects
+   │   ├── Cargo.toml      # ワークスペースのルート
+   │   ├── hello_world     # プロジェクト1
+   │   │   ├── Cargo.toml
+   │   │   └── src
+   │   │       └── main.rs
+   │   └── count          # プロジェクト2
+   │       ├── Cargo.toml
+   │       └── src
+   │           └── main.rs
    ```
    - 開発環境の設定を分離
    - メンテナンス性の向上
    - チーム間での共有が容易
 
-4. **Alpine LinuxベースのDockerイメージ**
-   - 軽量で高速な環境
-   - セキュリティリスクの最小化
-   - ビルド時間の短縮
+4. **Rustイメージの選択**
+   - 公式イメージを使用
+   - 安定性とセキュリティの確保
+   - 必要な開発ツールが事前インストール済み
 
 ## Dev Containersの使用方法
 
@@ -73,58 +85,116 @@ Docker と VS Code Dev Containers を使用した、Mac最適化のRust開発環
    - ファイル編集: 通常のVS Code同様
    - Git操作: 内蔵のGitツール使用可能
 
-### 高度な使用方法
+## セットアップ
 
-1. **カスタム設定**
-   ```json
-   // devcontainer.jsonの例
-   {
-     "customizations": {
-       "vscode": {
-         "settings": {
-           "editor.formatOnSave": true,
-           "rust-analyzer.checkOnSave.command": "clippy"
-         }
-       }
-     }
-   }
-   ```
+### 必要なファイル
 
-2. **拡張機能の自動インストール**
-   - rust-analyzer
-   - LLDB
-   - Git Lens
-   - その他必要な拡張機能
+1. **.devcontainer/devcontainer.json**
+```json
+{
+    "name": "Rust Development",
+    "dockerComposeFile": "../compose.yaml",
+    "service": "rust",
+    "workspaceFolder": "/workspace",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "rust-lang.rust-analyzer",
+                "vadimcn.vscode-lldb",
+                "tamasfe.even-better-toml",
+                "serayuzgur.crates"
+            ],
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "bash",
+                "terminal.integrated.profiles.linux": {
+                    "bash": {
+                        "path": "/bin/bash"
+                    }
+                },
+                "[rust]": {
+                    "editor.formatOnSave": true,
+                    "editor.defaultFormatter": "rust-lang.rust-analyzer"
+                },
+                "rust-analyzer.checkOnSave.command": "clippy",
+                "rust-analyzer.cargo.allFeatures": true,
+                "rust-analyzer.procMacro.enable": true
+            }
+        }
+    },
+    "remoteUser": "rustdev",
+    "postCreateCommand": "rustup component add rust-src rustfmt clippy rust-analyzer"
+}
+```
 
-3. **デバッグ機能の使用**
+2. **projects/Cargo.toml**
+```toml
+[workspace]
+resolver = "2"
+members = [
+    "hello_world",
+    "count"
+]
+exclude = [
+    "target"
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+```
+
+## 開発環境
+
+### 新しいプロジェクトの作成
+
+```bash
+cd /workspace/projects
+cargo new プロジェクト名
+```
+
+その後、`projects/Cargo.toml`の`members`配列に新しいプロジェクト名を追加します。
+
+### rust-analyzerの設定
+
+rust-analyzerを正しく動作させるために、以下の点に注意してください：
+
+1. ワークスペースのルートに`Cargo.toml`が必要
+2. 各プロジェクトが適切なディレクトリ構造を持つ
+3. 依存関係が正しく解決される
+
+## トラブルシューティング
+
+### よくある問題と解決方法
+
+1. **rust-analyzerが動作しない場合**
+   - VSCodeを再起動
+   - コンテナを再ビルド
+   - `cargo check`を実行して依存関係を確認
+
+2. **ビルドエラーが発生する場合**
+   - `cargo clean`を実行してキャッシュをクリア
+   - プロジェクトの依存関係を確認
+   - Rustのツールチェーンが正しくインストールされているか確認
+
+3. **パスの解決に問題がある場合**
+   - 絶対パスではなく相対パスを使用
+   - ワークスペースのルートからの正しいパスを確認
+   - マウントポイントが正しく設定されているか確認
+
+### デバッグ方法
+
+1. **VSCode デバッガーの使用**
    - ブレークポイントの設定
    - 変数の監視
-   - ステップ実行
+   - コールスタックの確認
 
-4. **ポートフォワーディング**
-   - 自動的にポートを転送
-   - Web開発時に便利
-   - カスタムポートの設定可能
+2. **ログの確認**
+   - Dockerコンテナのログ
+   - rust-analyzerのログ
+   - Cargoのビルドログ
 
-### 便利な機能
+## 参考リンク
 
-1. **ファイル同期**
-   - ホストとコンテナ間でリアルタイム同期
-   - 変更が即座に反映
-
-2. **統合ターミナル**
-   - コンテナ内のシェルに直接アクセス
-   - 複数ターミナルの同時使用可能
-
-3. **Git操作**
-   - コミット、プッシュ、プル
-   - ブランチ管理
-   - 差分表示
-
-4. **タスク実行**
-   - ビルド
-   - テスト
-   - リント
-   - フォーマット
-
-[以下、既存のセクションが続きます...]
+- [Rust Documentation](https://www.rust-lang.org/learn)
+- [VS Code Dev Containers](https://code.visualstudio.com/docs/remote/containers)
+- [rust-analyzer Manual](https://rust-analyzer.github.io/manual.html)
