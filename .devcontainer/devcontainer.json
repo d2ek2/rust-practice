@@ -29,5 +29,6 @@
         }
     },
     "remoteUser": "rustdev",
-    "postCreateCommand": "rustup component add rust-src rustfmt clippy"
+    "postCreateCommand": "rustup component add rust-src rustfmt clippy rust-analyzer",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
 }

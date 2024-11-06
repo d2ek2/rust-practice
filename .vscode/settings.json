@@ -1,0 +1,12 @@
+{
+    "rust-analyzer.linkedProjects": [
+        "./projects/Cargo.toml"
+    ],
+    "rust-analyzer.checkOnSave.command": "clippy",
+    "rust-analyzer.check.allTargets": true,
+    "rust-analyzer.diagnostics.enable": true,
+    "[rust]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "rust-lang.rust-analyzer"
+    }
+}
