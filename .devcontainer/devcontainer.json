@@ -9,7 +9,8 @@
                 "rust-lang.rust-analyzer",
                 "vadimcn.vscode-lldb",
                 "tamasfe.even-better-toml",
-                "serayuzgur.crates"
+                "serayuzgur.crates",
+                "GitHub.copilot"
             ],
             "settings": {
                 "terminal.integrated.defaultProfile.linux": "bash",
@@ -24,10 +25,31 @@
                 },
                 "rust-analyzer.checkOnSave.command": "clippy",
                 "rust-analyzer.cargo.allFeatures": true,
-                "rust-analyzer.procMacro.enable": true
+                "rust-analyzer.procMacro.enable": true,
+                "rust-analyzer.check.command": "clippy",
+                "rust-analyzer.check.allTargets": true,
+                "rust-analyzer.linkedProjects": [
+                    "./Cargo.toml"
+                ],
+                "rust-analyzer.rootIndicationFileNames": [
+                    "Cargo.toml",
+                    "rust-toolchain.toml"
+                ],
+                "rust-analyzer.cargo.buildScripts.enable": true,
+                "rust-analyzer.diagnostics.enable": true,
+                "rust-analyzer.hover.documentation": true,
+                "rust-analyzer.inlayHints.enable": true,
+                "rust-analyzer.lens.enable": true
             }
         }
     },
     "remoteUser": "rustdev",
-    "postCreateCommand": "rustup component add rust-src rustfmt clippy"
+    "postCreateCommand": "rustup component add rust-src rustfmt clippy rust-analyzer",
+    "postStartCommand": "cargo check",
+    "mounts": [
+        "source=${localWorkspaceFolder}/target,target=/workspace/target,type=volume"
+    ],
+    "remoteEnv": {
+        "RUST_BACKTRACE": "1"
+    }
 }
