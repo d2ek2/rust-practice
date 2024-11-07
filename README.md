@@ -133,6 +133,7 @@ resolver = "2"
 members = [
     "hello_world",
     "count"
+    ## ここに新たなファイルを作成したら追加する
 ]
 exclude = [
     "target"
