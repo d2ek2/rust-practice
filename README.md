@@ -102,7 +102,9 @@ Docker と VS Code Dev Containers を使用した、Mac最適化のRust開発環
                 "rust-lang.rust-analyzer",
                 "vadimcn.vscode-lldb",
                 "tamasfe.even-better-toml",
-                "serayuzgur.crates"
+                "serayuzgur.crates",
+                "ms-azuretools.vscode-docker",
+                "ms-vscode-remote.remote-containers"
             ],
             "settings": {
                 "terminal.integrated.defaultProfile.linux": "bash",
@@ -117,12 +119,20 @@ Docker と VS Code Dev Containers を使用した、Mac最適化のRust開発環
                 },
                 "rust-analyzer.checkOnSave.command": "clippy",
                 "rust-analyzer.cargo.allFeatures": true,
-                "rust-analyzer.procMacro.enable": true
+                "rust-analyzer.procMacro.enable": true,
+                "docker.enableExtensionSurvey": false,
+                "docker.showStartPage": false,
+                "docker.images.sortBy": "CreatedTime",
+                "docker.containers.sortBy": "Status",
+                "remote.containers.defaultExtensions": [
+                    "ms-azuretools.vscode-docker"
+                ]
             }
         }
     },
     "remoteUser": "rustdev",
-    "postCreateCommand": "rustup component add rust-src rustfmt clippy rust-analyzer"
+    "postCreateCommand": "rustup component add rust-src rustfmt clippy rust-analyzer",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
 }
 ```
 
@@ -163,6 +173,23 @@ rust-analyzerを正しく動作させるために、以下の点に注意して�
 2. 各プロジェクトが適切なディレクトリ構造を持つ
 3. 依存関係が正しく解決される
 
+### Docker拡張機能の機能
+
+1. **コンテナ管理**
+   - コンテナの起動/停止
+   - ログの表示
+   - シェルへのアクセス
+
+2. **イメージ管理**
+   - イメージの表示と管理
+   - ビルド履歴の確認
+   - キャッシュの管理
+
+3. **開発サポート**
+   - Dockerfile構文のハイライト
+   - Docker Compose設定のバリデーション
+   - コマンド補完
+
 ## トラブルシューティング
 
 ### よくある問題と解決方法
@@ -182,6 +209,11 @@ rust-analyzerを正しく動作させるために、以下の点に注意して�
    - ワークスペースのルートからの正しいパスを確認
    - マウントポイントが正しく設定されているか確認
 
+4. **Docker関連の問題**
+   - コンテナの再ビルド: `Docker: Rebuild Container`
+   - 拡張機能の再インストール
+   - Docker Desktopの再起動
+
 ### デバッグ方法
 
 1. **VSCode デバッガーの使用**
@@ -199,3 +231,4 @@ rust-analyzerを正しく動作させるために、以下の点に注意して�
 - [Rust Documentation](https://www.rust-lang.org/learn)
 - [VS Code Dev Containers](https://code.visualstudio.com/docs/remote/containers)
 - [rust-analyzer Manual](https://rust-analyzer.github.io/manual.html)
+- [Docker Extension for VS Code](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
