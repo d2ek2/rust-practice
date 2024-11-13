@@ -3,6 +3,12 @@
 Cargo.lock
 .DS_Store
 
+# Ignore all files and directories in projects/ except for count, fizzbuzz, and hello_world
+/projects/*
+!/projects/count/
+!/projects/fizzbuzz/
+!/projects/hello_world/
+
 
 # Added by cargo
 #
