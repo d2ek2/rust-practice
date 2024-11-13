@@ -2,7 +2,8 @@
     "rust-analyzer.linkedProjects": [
         "./projects/Cargo.toml"
     ],
-    "rust-analyzer.checkOnSave.command": "clippy",
+    "rust-analyzer.check.command": "clippy",  // 新しい設定
+    // "rust-analyzer.checkOnSave.command": "clippy", // 古い設定
     "rust-analyzer.check.allTargets": true,
     "rust-analyzer.diagnostics.enable": true,
     "[rust]": {
