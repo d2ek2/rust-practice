@@ -40,6 +40,6 @@ fn test_fizzbuzz() {
     assert_eq!(check_fizzbuzz(1), "1");
     assert_eq!(check_fizzbuzz(3), "Fizz");
     assert_eq!(check_fizzbuzz(5), "Buzz");
-    assert_eq!(check_fizzbuzz(15), "FizzBuzz");
+    assert_eq!(check_fizzbuzz(225), "FizzBuzz");
     assert_eq!(check_fizzbuzz(7), "7");
 }
