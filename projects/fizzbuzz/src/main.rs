@@ -10,7 +10,7 @@ fn check_fizzbuzz(n: i32) -> String {
 }
 
 fn main() {
-    println!("数値を入力してください：");
+    println!("数値を入力してください！！：");
 
     let mut input = String::new();
 

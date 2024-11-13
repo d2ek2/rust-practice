@@ -14,7 +14,7 @@ Docker と VS Code Dev Containers を使用した、Mac最適化のRust開発環
 
 ## 環境構成
 
-- Rust 1.74
+- Rust latest
 - Docker
 - VS Code + Dev Containers
 - Git
@@ -225,6 +225,59 @@ rust-analyzerを正しく動作させるために、以下の点に注意して�
    - Dockerコンテナのログ
    - rust-analyzerのログ
    - Cargoのビルドログ
+
+### Cargoのビルドとクリーンアップ
+
+1. **targetディレクトリについて**
+   - ビルド成果物の保存場所
+   - デバッグビルドと最適化ビルドの両方を保持
+   - 複数のRustバージョンのアーティファクトを保存
+   - 依存クレートのビルド結果も保存
+
+2. **容量の管理**
+   - targetディレクトリは時間とともに肥大化
+   - デバッグビルドは特に大きな容量を消費
+   - 1プロジェクトで数GB規模になることも
+
+3. **cargo cleanコマンド**
+   ```bash
+   # プロジェクト全体のクリーン
+   cargo clean
+   
+   # 特定のターゲットのみクリーン
+   cargo clean --target x86_64-unknown-linux-gnu
+   
+   # リリースビルドのみクリーン
+   cargo clean --release
+   ```
+
+4. **クリーンアップの推奨タイミング**
+   - Rustのバージョンアップデート後
+   - ディスク容量が逼迫した時
+   - プロジェクトの依存関係を大きく変更した後
+   - 開発完了後の最終クリーンアップ
+
+5. **容量最適化のベストプラクティス**
+   - 定期的な`cargo clean`の実行
+   - 必要なターゲットのみビルド
+   - デバッグシンボルの最適化
+   ```toml
+   [profile.dev]
+   debug = 1  # デバッグシンボルを削減
+   
+   [profile.release]
+   debug = false  # デバッグシンボルを無効化
+   ```
+
+6. **自動クリーンアップの設定**
+   - CIパイプラインでの自動クリーン
+   - 定期的なクリーンアップスクリプト
+   ```bash
+   #!/bin/bash
+   # 30日以上アクセスのないtargetディレクトリをクリーン
+   find . -type d -name "target" -atime +30 -exec cargo clean \;
+   ```
+```
 
 ## 参考リンク
 
