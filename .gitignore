@@ -1,24 +1,20 @@
-/target
+# ルートディレクトリのtarget
+/target/
+
+# すべてのtargetディレクトリ
+**/target/
+
 **/*.rs.bk
 Cargo.lock
 .DS_Store
 
-# Ignore all files and directories in projects/ except for count, fizzbuzz, and hello_world
+# Ignore all files and directories in projects/ except for specific projects
 /projects/*
 !/projects/count/
 !/projects/fizzbuzz/
 !/projects/hello_world/
 
-
-# Added by cargo
-#
-# already existing elements were commented out
-
-#/target
-
-
-# Added by cargo
-#
-# already existing elements were commented out
-
-#/target
+# Explicitly ignore target directories in allowed projects
+/projects/count/target/
+/projects/fizzbuzz/target/
+/projects/hello_world/target/
