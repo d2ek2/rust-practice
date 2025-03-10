@@ -4,6 +4,9 @@
 # すべてのtargetディレクトリ
 **/target/
 
+# すべてのコンパイルファイルを無視
+**/main
+
 **/*.rs.bk
 Cargo.lock
 .DS_Store
