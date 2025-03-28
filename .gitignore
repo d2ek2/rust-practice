@@ -11,7 +11,7 @@
 Cargo.lock
 .DS_Store
 
-# Ignore all files and directories in projects/ except for specific projects
+# Ignore all files and directories in /projects/ except for specific projects
 /projects/*
 !/projects/count/
 !/projects/fizzbuzz/
