@@ -30,7 +30,6 @@ fn main() {
         }
         Err(_) => {
             println!("有効な整数を入力してください");
-            return;
         }
     }
 }
