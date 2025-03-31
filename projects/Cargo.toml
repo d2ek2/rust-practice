@@ -4,7 +4,7 @@ members = [
     "hello_world",
     "count",
     "fizzbuzz"
-, "number", "arithmetic-operations-quiz"]
+, "number", "arithmetic-operations-quiz","simple-poker"]
 exclude = [
     "target"
 ]

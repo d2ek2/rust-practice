@@ -10,6 +10,7 @@
 **/*.rs.bk
 Cargo.lock
 .DS_Store
+/Cargo.toml
 
 # Ignore all files and directories in /projects/ except for specific projects
 /projects/*
