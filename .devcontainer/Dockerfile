@@ -18,6 +18,9 @@ RUN rustup component add \
     rustfmt \
     clippy
 
+#Rustのpcsc-sysクレートがLinux環境向けのPC/SCライブラリ（libpcsclite）を取り込む
+RUN apt-get update && apt-get install -y libpcsclite-dev
+
 # シェルとキャッシュの設定
 SHELL ["/bin/bash", "-c"]
 ENV SHELL /bin/bash
